@@ -7,7 +7,10 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(document).ready(function() {
-    $('.genre_icon').hide();
+
+    var height = 260;
+    var width = 180;
+
     function pad(number, length) {
 
         var str = '' + number;
@@ -17,16 +20,14 @@ $(document).ready(function() {
         return str;
     }
 
+    $('.genre_icon').hide();
+
     $('.group').each(function() {
         var group = $(this);
         var rating = $(this).find('.imdb-number-rating');
         var img = group.first().find('img').not('.bookmark').not('.heart');
         var imdbUrl;
         var url;
-
-        var height = 260;
-        var width = 180;
-
         var getJSON = function( url, callback) {
             var xhr = new XMLHttpRequest();
             xhr.open("get", url, true);
@@ -74,10 +75,9 @@ $(document).ready(function() {
 
             /*Ni na bian ji dian (aka What Time Is It There?)*/
             if (full_text.indexOf('(aka ') > -1)
-            {              
+            {
                 title = title.substr(title.indexOf('(aka ') +5, title.length).replace(')','');
             }
-
 
             url = "https://www.omdbapi.com/?t=" + title.replace(' ', '+') + "&y=" + year +"&plot=short&r=json";
         }
@@ -90,11 +90,8 @@ $(document).ready(function() {
         });
     });
 
-    $('genre-icon').css('height', 260);
-    $('genre-icon').css('width', 180); 
-
-    $('td.genre_icon img').css('height', 260);
-    $('td.genre_icon img').css('width', 180); 
-    $('td.genre_icon').css('max-width', 180); 
+    $('td.genre_icon img').css('height', height);
+    $('td.genre_icon img').css('width', width);
+    $('td.genre_icon').css('max-width', width);
     $('.genre_icon').show();
 });
