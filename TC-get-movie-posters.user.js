@@ -7,7 +7,7 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(document).ready(function() {
-
+    $('.genre_icon').hide();
     function pad(number, length) {
 
         var str = '' + number;
@@ -37,7 +37,7 @@ $(document).ready(function() {
                     callback(null, xhr.response);
                     var t = (xhr.response);
                     url = t.Poster;
-                    if (url =='N/A' || url.length===0)
+                    if (!url || url =='N/A' || url.length===0)
                     {
                         url = 'https://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg';
                     }
@@ -58,11 +58,10 @@ $(document).ready(function() {
             xhr.send();
 
         };
-        group.find('genre-icon').hide();
-
-        if (rating.length)
+        console.log(rating);
+        if (rating && rating.length)
         {
-                imdbUrl = rating.find('a').attr('href');
+            imdbUrl = rating.find('a').attr('href');
             var imdbNumber_raw = imdbUrl.substr(imdbUrl.indexOf('/title/tt') + 9, imdbUrl.length);
             var imdbNumber = 'tt'+ pad(imdbNumber_raw, 7);
             url =  "https://www.omdbapi.com/?i=" + imdbNumber + "&plot=short&r=json";
@@ -79,10 +78,9 @@ $(document).ready(function() {
                 title = title.substr(title.indexOf('(aka ') +5, title.length).replace(')','');
             }
 
-         
+
             url = "https://www.omdbapi.com/?t=" + title.replace(' ', '+') + "&y=" + year +"&plot=short&r=json";
         }
-
 
         getJSON(url,
                 function( err, data) {
@@ -90,16 +88,13 @@ $(document).ready(function() {
                 console.log("Something went wrong: " + err);
             }
         });
-
-        group.find('genre-icon').css('height', height);
-        group.find('genre-icon').css('width', width); 
-
-        group.find('td.genre_icon img').css('height', height);
-        group.find('td.genre_icon img').css('width', width); 
-        group.find('td.genre_icon').css('max-width', width); 
-        
-        group.find('genre-icon').show();
-
-
     });
+
+    $('genre-icon').css('height', 260);
+    $('genre-icon').css('width', 180); 
+
+    $('td.genre_icon img').css('height', 260);
+    $('td.genre_icon img').css('width', 180); 
+    $('td.genre_icon').css('max-width', 180); 
+    $('.genre_icon').show();
 });
