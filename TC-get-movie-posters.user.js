@@ -59,7 +59,7 @@ $(document).ready(function() {
             xhr.send();
 
         };
-        console.log(rating);
+        
         if (rating && rating.length)
         {
             imdbUrl = rating.find('a').attr('href');
